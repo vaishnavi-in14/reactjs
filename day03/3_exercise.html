@@ -1,0 +1,44 @@
+<!-- Create a simple component called as Avatar. It should have an image and below the image, you should display the name of the person denoted by Avatar.  (Extra - try clipping the avatar image such that it appears in a circle like look). 
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSX component</title>
+</head>
+<body style="background-color:lightgreen">
+    <div id="root"></div>
+        <script src="https://unpkg.com/react@16.13.1/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16.13.1/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+        <script type="text/babel">
+            const Avatar = ({imageSrc, name, width, radius}) => {
+                return (
+                    <div>
+                        <img src={imageSrc} alt={name} width={width} style={{borderRadius: radius}}/>
+                        <p>{name}</p>
+                    </div>
+                );
+            };
+
+            const element = (
+                <div>
+                    <Avatar imageSrc={"/day03/apple-seed.jpg"} 
+                        name={"Apple Seed"} 
+                        width={"100"} 
+                        color={"#ff0000"}
+                        radius={"50%"}>   
+                    </Avatar>
+                </div>
+            );
+
+            ReactDOM.render(element, document.getElementById("root"));
+        </script> 
+        <!-- <div>
+            <img src="/day03/apple-seed.jpg" alt="Apple Seed" width="200">
+            <p>Apple Seed</p>
+        </div> -->
+</body>
+</html>

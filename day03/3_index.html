@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS expression demo</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/react@16.13.1/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16.13.1/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+       /*  const greeting = (person) => {
+            return `Hello ${person}`;
+        };
+        const headingNeeded =  false;
+        const subheadingNeeded = true;
+        
+        const para = "There is some para here";
+
+        const divElement = (
+            <div>
+                <div>
+                    <h1>{headingNeeded ? heading() : greeting('John')}</h1>
+                    <h2>{subheadingNeeded && 'Hello react'}</h2>
+                </div>
+                <p>{para || 'This is default para'}</p>
+            </div>
+        );  */
+        const Greeting = ({person, color, bgColor}) => {
+            //console.log(person, color);
+            return (
+                <div style={{color, backgroundColor: bgColor}}>
+                    <h1>Hello</h1>
+                    <h2>{person}</h2>
+                </div>
+            );
+        };
+
+        const divElement = (
+            <div>
+                <Greeting person='John' color='#ff0000' bgColor='#00ffee'></Greeting>
+            </div>
+        )
+        ReactDOM.render(divElement, document.getElementById("root"));
+    </script> 
+
+</body>
+</html>
