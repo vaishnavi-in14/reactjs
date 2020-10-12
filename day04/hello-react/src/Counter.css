@@ -1,0 +1,13 @@
+.Counter{
+    display: flex;
+    padding: 15px;
+}
+
+.Label {
+    margin-left: 5px;
+    margin-right: 5px;
+} 
+
+.Multiplier {
+    margin-left: 10px;
+}

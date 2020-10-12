@@ -1,0 +1,25 @@
+.Box {
+    border: solid 2px blue;
+    margin: 10px;
+    width: 100px;
+    height: 100px;
+    display: inline-block;
+}
+
+.Box-rounded {
+    border-radius: 50%;
+}
+
+.ThickBorder {
+    border-width: 10px;
+}
+
+.Dashed {
+    border: 2px dashed;
+}
+
+.NestedBox {
+    border: solid 2px blue;
+    width: 70px;
+    height: 70px;
+}
