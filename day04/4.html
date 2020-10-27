@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Props Validation</title>
+</head>
+<body>
+    <div id="root"></div>
+        <script src="https://unpkg.com/react@16.13.1/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16.13.1/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+        <script  src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.7.2/prop-types.js"
+        integrity="sha512-Ttnt6nUh/1oV+4T/KWkG/ORvlIEOZohMCT/GIzelxTceoIreR2A1r6zmgFnEvi7GgstoDblmpMO/Gi9CXKTqGQ=="
+        crossorigin="anonymous"></script>
+
+        <script type="text/babel">
+            const Greeting = ({person, color, bgColor}) => {
+                return (
+                    <div style={{color, backgroundColor: bgColor}}>
+                        <h1>Hello</h1>
+                        <h2>{person}</h2>
+                    </div>
+                );
+            };
+            
+            /* Greeting.propTypes = {
+                person: PropTypes.string.isRequired,
+                color: PropTypes.string,
+            }; */
+
+            Greeting.propTypes = {
+                person: (props, propName) => {
+                    console.assert(typeof props[propName] === "string", `${propName} type is wrong`);
+                },
+                color: (props, propName) => {
+                    console.assert(typeof props[propName] === "string", `${propName} type is wrong`);
+                },
+            };
+
+            const divElement = (
+                <div>
+                    <Greeting person={5} color={5} color1={"#ff0000"} bgColor={"#00ffee"}>
+                        <h1>A h1</h1>
+                        <h2>A h2</h2>
+                    </Greeting>
+                </div>                
+            );
+
+            ReactDOM.render(divElement, document.getElementById("root"));
+        </script>
+</body>
+</html>
