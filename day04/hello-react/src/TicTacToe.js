@@ -3,13 +3,13 @@ Check if there was a draw and display the status
 Add two fields to get players names and ensure only one character can be entered in each field, and you cant enter same name for both players
 Can we store history to local storage and resurrect the game upon reloading in the browser?  (Remember the custom hook to read/write from local storage)
  */
+
+/* Day-16: Implement the useTicTacToe and then refactor it to use useReducer on your own. */
 import './TicTacToe.css';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 
-import {useLocalStorageState} from './useLocalStorageState';
-
-//import {readFromStorage, writeToStorage} from './LocalStorage';
+import useTicTacToe from './useTicTacToe';
 
 import cn from 'classnames';
 
@@ -56,10 +56,24 @@ const Board = ({board, toHighlight, handleClick}) => {
     );
 };
 
+
 const Game = () => {
    
     // console.log(player1);
     // console.log(player2);
+
+    const {
+        history,
+        step,
+        setStep,
+        player, 
+        setPlayer,  
+        setPlayer1,  
+        setPlayer2,
+        computeWinner,
+        processCurrentStepAtIndex,
+        resetGame,
+    } = useTicTacToe();
 
     const handleClick = (i) => {
         // console.log(`square ${i} is clicked`);
@@ -70,69 +84,8 @@ const Game = () => {
 
         // console.log("Step");
         // console.log(step);
-
-        const canInteract = () => step === history.length - 1;
-        //console.log(canInteract());
-        if(!canInteract()) {
-            return;
-        }
-
-        if(board[i] === null && !computeWinner(board)) {
-            //Derive right board 
-            const newBoard = [...board];
-            newBoard[i] = player;
-            //Flip the player
-            setPlayer(player === player1 ? player2 : player1);
-            //setPlayer(player === player1 ? player2 : player1);
-            //Set the board state
-            //console.log(board);
-            const newHistory = history.concat([newBoard])
-            setHistory(newHistory);
-
-            //Update step
-            const newStep = step + 1;
-            setStep(newStep);
-        }
+        processCurrentStepAtIndex(i);
     };
-
-    // let player1;
-    // let player2;
-
-
-    //const [history, setHistory] = useState(readFromStorage("HISTORY"));
-
-    //call useLocalStorageState with initialValue and storage key
-    const [history, setHistory] = useLocalStorageState([Array(9).fill(null)], 'HISTORY');
-    const [step, setStep] = useLocalStorageState(0, 'STEP');
-
-    //const [history, setHistory] = useState([Array(9).fill(null)]);
-    //const [step, setStep] = useState(0);
-
-    const [player1, setPlayer1] = useState('X');
-    const [player2, setPlayer2] = useState('O');
-    const [player, setPlayer] = useState(player1);
-    
-
-    function computeWinner(board) {
-        const lines = [
-            [0, 1, 2],
-            [3, 4, 5],
-            [6, 7, 8],
-            [0, 3, 6],
-            [1, 4, 7],
-            [2, 5, 8],
-            [0, 4, 8],
-            [2, 4, 6],
-        ];
-        for (let i = 0; i < lines.length; i++) {
-            const [a, b, c] = lines[i];
-            if (board[a] && board[a] === board[b] && board[a] === board[c]) {
-                return [board[a], lines[i]];
-            }
-        }
-        return null;
-    }
-
    
     const result = computeWinner(history[step]);
 
@@ -192,7 +145,6 @@ const Game = () => {
         ));
     }
 
-    const board = history[step];
     // console.log(board);
     // console.log(history);
 
@@ -204,6 +156,9 @@ const Game = () => {
             firstPlayerNameFieldRef.current.focus();
         }
     }, []);
+
+   
+
 
     /* let numberOfRenders = useRef(0);
 
@@ -258,10 +213,11 @@ const Game = () => {
             <div>
                 <button className="resetBtn"
                     onClick={() => {
-                        setHistory([Array(9).fill(null)]);
-                        setStep(0);
-                        setPlayer(player1)
-                    }}>Reset Game</button>
+                        resetGame();
+                    }}
+                >
+                Reset Game
+                </button>
             </div>
         </div>
     );
