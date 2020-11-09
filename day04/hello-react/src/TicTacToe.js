@@ -34,7 +34,7 @@ const Board = ({board, toHighlight, handleClick}) => {
             handleClick={() => handleClick(i)}
         />;
     }
-    
+
     return (
         <div>
             <div className="board-row">
